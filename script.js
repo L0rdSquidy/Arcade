@@ -90,7 +90,7 @@
   var SPRITE_SHEET_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAEACAYAAAADRnAGAAACGUlEQVR42u3aSQ7CMBAEQIsn8P+/hiviAAK8zFIt5QbELiTHmfEYE3L9mZE9AAAAqAVwBQ8AAAD6THY5CgAAAKbfbPX3AQAAYBEEAADAuZrC6UUyfMEEAIBiAN8OePXnAQAAsLcmmKFPAQAAgHMbm+gbr3Sdo/LtcAAAANR6GywPAgBAM4D2JXAAABoBzBjA7AmlOx8AAEAzAOcDAADovTc4vQim6wUCABAYQG8QAADd4dPd2fRVYQAAANQG0B4HAABAawDnAwAA6AXgfAAAALpA2uMAAABwPgAAgPoAM9Ci/R4AAAD2dmqcEQIAIC/AiQGuAAYAAECcRS/a/cJXkUf2AAAAoBaA3iAAALrD+gIAAADY9baX/nwAAADNADwFAADo9YK0e5FMX/UFACA5QPSNEAAAAHKtCekmDAAAAADvBljtfgAAAGgMMGOrunvCy2uCAAAACFU6BwAAwF6AGQPa/XsAAADYB+B8AAAAtU+ItD4OAwAAAFVhAACaA0T7B44/BQAAANALwGMQAAAAADYO8If2+P31AgAAQN0SWbhFDwCAZlXgaO1xAAAA1FngnA8AACAeQPSNEAAAAM4CnC64AAAA4GzN4N9NSfgKEAAAAACszO26X8/X6BYAAAD0Anid8KcLAAAAAAAAAJBnwNEvAAAA9Jns1ygAAAAAAAAAAAAAAAAAAABAQ4COCENERERERERERBrnAa1sJuUVr3rsAAAAAElFTkSuQmCC';
   var LEFT_KEY = 37;
   var RIGHT_KEY = 39;
-  var SHOOT_KEY = 88;
+  var SHOOT_KEY = 32;
   var TEXT_BLINK_FREQ = 500;
   var PLAYER_CLIP_RECT = { x: 0, y: 204, w: 62, h: 32 };
   var ALIEN_BOTTOM_ROW = [ { x: 0, y: 0, w: 51, h: 34 }, { x: 0, y: 102, w: 51, h: 34 }];
@@ -184,7 +184,7 @@
     init: function(img, x, y) {
       this.img = img;
       this.position = new Point2D(x, y);
-      this.scale = new Point2D(1, 1);
+      this.scale = new Point2D(8, 8);
       this.bounds = new Rect(x, y, this.img.width, this.img.height);
       this.doLogic = true;
     },
@@ -334,7 +334,7 @@
       this.scale.set(0.5, 0.5);
       this.alive = true;
       this.onFirstState = true;
-      this.stepDelay = 1; // try 2 secs to start with...
+      this.stepDelay = 1; 
       this.stepAccumulator = 0;
       this.doShoot - false;
       this.bullet = null;
@@ -648,7 +648,7 @@
   function drawBottomHud() {
     ctx.fillStyle = '#02ff12';
     ctx.fillRect(0, CANVAS_HEIGHT - 30, CANVAS_WIDTH, 2);
-    fillText(player.lives + ' x ', 10, CANVAS_HEIGHT - 7.5, 'white', 20);
+    fillText(player.lives + ' x ', 10, CANVAS_HEIGHT - 7.5, 'blue', 20);
     ctx.drawImage(spriteSheetImg, player.clipRect.x, player.clipRect.y, player.clipRect.w, 
                    player.clipRect.h, 45, CANVAS_HEIGHT - 23, player.clipRect.w * 0.5,
                    player.clipRect.h * 0.5);
