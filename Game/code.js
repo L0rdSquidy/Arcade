@@ -1,39 +1,31 @@
-/* Simple JavaScript Inheritance
- * By John Resig http://ejohn.org/
- * MIT Licensed.
- */
-// Inspired by base2 and Prototype
 (function(){
     let initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
    
-    // The base Class implementation (does nothing)
+ 
     this.Class = function(){};
    
-    // Create a new Class that inherits from this class
+  
     Class.extend = function(prop) {
       let _super = this.prototype;
      
-      // Instantiate a base class (but only create the instance,
-      // don't run the init constructor)
+    
       initializing = true;
       let prototype = new this();
       initializing = false;
      
-      // Copy the properties over onto the new prototype
+     
       for (let name in prop) {
-        // Check if we're overwriting an existing function
+      
         prototype[name] = typeof prop[name] == "function" &&
           typeof _super[name] == "function" && fnTest.test(prop[name]) ?
           (function(name, fn){
             return function() {
               let tmp = this._super;
              
-              // Add a new ._super() method that is the same method
-              // but on the super-class
+          
               this._super = _super[name];
              
-              // The method only need to be bound temporarily, so we
-              // remove it when we're done executing
+             
               let ret = fn.apply(this, arguments);        
               this._super = tmp;
              
@@ -43,31 +35,23 @@
           prop[name];
       }
      
-      // The dummy class constructor
+   
       function Class() {
-        // All construction is actually done in the init method
+       
         if ( !initializing && this.init )
           this.init.apply(this, arguments);
       }
      
-      // Populate our constructed prototype object
       Class.prototype = prototype;
      
-      // Enforce the constructor to be what we expect
       Class.prototype.constructor = Class;
    
-      // And make this class extendable
       Class.extend = arguments.callee;
      
       return Class;
     };
   })();
   
-  
-  // ###################################################################
-  // shims
-  //
-  // ###################################################################
   (function() {
     let requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     window.requestAnimationFrame = requestAnimationFrame;
@@ -80,17 +64,13 @@
     }
   })();
   
-  // ###################################################################
-  // Constants
-  //
-  // ###################################################################
   let IS_CHROME = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
   let CANVAS_WIDTH = 640;
   let CANVAS_HEIGHT = 640;
   let SPRITE_SHEET_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAEACAYAAAADRnAGAAACGUlEQVR42u3aSQ7CMBAEQIsn8P+/hiviAAK8zFIt5QbELiTHmfEYE3L9mZE9AAAAqAVwBQ8AAAD6THY5CgAAAKbfbPX3AQAAYBEEAADAuZrC6UUyfMEEAIBiAN8OePXnAQAAsLcmmKFPAQAAgHMbm+gbr3Sdo/LtcAAAANR6GywPAgBAM4D2JXAAABoBzBjA7AmlOx8AAEAzAOcDAADovTc4vQim6wUCABAYQG8QAADd4dPd2fRVYQAAANQG0B4HAABAawDnAwAA6AXgfAAAALpA2uMAAABwPgAAgPoAM9Ci/R4AAAD2dmqcEQIAIC/AiQGuAAYAAECcRS/a/cJXkUf2AAAAoBaA3iAAALrD+gIAAADY9baX/nwAAADNADwFAADo9YK0e5FMX/UFACA5QPSNEAAAAHKtCekmDAAAAADvBljtfgAAAGgMMGOrunvCy2uCAAAACFU6BwAAwF6AGQPa/XsAAADYB+B8AAAAtU+ItD4OAwAAAFVhAACaA0T7B44/BQAAANALwGMQAAAAADYO8If2+P31AgAAQN0SWbhFDwCAZlXgaO1xAAAA1FngnA8AACAeQPSNEAAAAM4CnC64AAAA4GzN4N9NSfgKEAAAAACszO26X8/X6BYAAAD0Anid8KcLAAAAAAAAAJBnwNEvAAAA9Jns1ygAAAAAAAAAAAAAAAAAAABAQ4COCENERERERERERBrnAa1sJuUVr3rsAAAAAElFTkSuQmCC';
   let LEFT_KEY = 37;
   let RIGHT_KEY = 39;
-  let SHOOT_KEY = 88;
+  let SHOOT_KEY = 32;
   let TEXT_BLINK_FREQ = 500;
   let PLAYER_CLIP_RECT = { x: 0, y: 204, w: 62, h: 32 };
   let ALIEN_BOTTOM_ROW = [ { x: 0, y: 0, w: 51, h: 34 }, { x: 0, y: 102, w: 51, h: 34 }];
@@ -99,12 +79,6 @@
   let ALIEN_X_MARGIN = 40;
   let ALIEN_SQUAD_WIDTH = 11 * ALIEN_X_MARGIN;
   
-  
-  
-  // ###################################################################
-  // Utility functions & classes
-  //
-  // ###################################################################
   function getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
   }
@@ -158,12 +132,6 @@
     }
   });
   
-  
-  
-  // ###################################################################
-  // Globals
-  //
-  // ###################################################################
   let canvas = null;
   let ctx = null;
   let spriteSheetImg = null;
@@ -181,12 +149,6 @@
   let wave = 1;
   let hasGameStarted = false;
   
-  
-  
-  // ###################################################################
-  // Entities
-  //
-  // ###################################################################
   let BaseSprite = Class.extend({
     init: function(img, x, y) {
       this.img = img;
@@ -271,7 +233,7 @@
       } else this.xVel = 0;
       
       if (wasKeyPressed(SHOOT_KEY)) {
-        if (this.bulletDelayAccumulator > 0.5) {
+        if (this.bulletDelayAccumulator > 0.25) {
           this.shoot(); 
           this.bulletDelayAccumulator = 0;
         }
@@ -291,21 +253,18 @@
     },
     
     update: function(dt) {
-      // update time passed between shots
+ 
       this.bulletDelayAccumulator += dt;
       
-      // apply x vel
       this.position.x += this.xVel * dt;
-      
-      // cap player position in screen bounds
+    
       this.position.x = clamp(this.position.x, this.bounds.w/2, CANVAS_WIDTH - this.bounds.w/2);
       this.updateBullets(dt);
     },
     
     draw: function(resized) {
       this._super(resized);
-  
-      // draw bullets
+ 
       for (let i = 0, len = this.bullets.length; i < len; i++) {
         let bullet = this.bullets[i];
         if (bullet.alive) {
@@ -343,7 +302,7 @@
       this.scale.set(0.5, 0.5);
       this.alive = true;
       this.onFirstState = true;
-      this.stepDelay = 1; // try 2 secs to start with...
+      this.stepDelay = 1; 
       this.stepAccumulator = 0;
       this.doShoot - false;
       this.bullet = null;
@@ -457,26 +416,16 @@
     }
   });
   
-  
-  
-  // ###################################################################
-  // Initialization functions
-  //
-  // ###################################################################
   function initCanvas() {
-    // create our canvas and context
     canvas = document.getElementById('game-canvas');
     ctx = canvas.getContext('2d');
     
-    // turn off image smoothing
     setImageSmoothing(false);
     
-    // create our main sprite sheet img
     spriteSheetImg = new Image();
     spriteSheetImg.src = SPRITE_SHEET_SRC;  
     preDrawImages();
   
-    // add event listeners and initially resize
     window.addEventListener('resize', resize);
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
@@ -539,12 +488,6 @@
     resize();
   }
   
-  
-  
-  // ###################################################################
-  // Helpful input functions
-  //
-  // ###################################################################
   function isKeyDown(key) {
     return keyStates[key];
   }
@@ -553,11 +496,6 @@
     return !prevKeyStates[key] && keyStates[key];
   }
   
-  
-  // ###################################################################
-  // Drawing & Update functions
-  //
-  // ###################################################################
   function updateAliens(dt) {
     if (updateAlienLogic) {
       updateAlienLogic = false;
@@ -601,7 +539,7 @@
         let alien = aliens[j];
         if (checkRectCollision(bullet.bounds, alien.bounds)) {
           alien.alive = bullet.alive = false;
-          particleManager.createExplosion(alien.position.x, alien.position.y, 'white', 70, 5,5,3,.15,50);
+          particleManager.createExplosion(alien.position.x, alien.position.y, 'red', 70, 5,5,3,.15,50);
           player.score += 25;
         }
       }
@@ -721,17 +659,10 @@
     requestAnimationFrame(animate);
   }
   
-  
-  
-  // ###################################################################
-  // Event Listener functions
-  //
-  // ###################################################################
   function resize() {
     let w = window.innerWidth;
     let h = window.innerHeight;
   
-      // calculate the scale factor to keep a correct aspect ratio
     let scaleFactor = Math.min(w / CANVAS_WIDTH, h / CANVAS_HEIGHT);
     
     if (IS_CHROME) {
@@ -740,7 +671,6 @@
       setImageSmoothing(false);
       ctx.transform(scaleFactor, 0, 0, scaleFactor, 0, 0);   
     } else {
-      // resize the canvas css properties
       canvas.style.width = CANVAS_WIDTH * scaleFactor + 'px';
       canvas.style.height = CANVAS_HEIGHT * scaleFactor + 'px'; 
     }
@@ -756,11 +686,6 @@
     keyStates[e.keyCode] = false;
   }
   
-  
-  // ###################################################################
-  // Start game!
-  //
-  // ###################################################################
   window.onload = function() {
     init();
     animate();
