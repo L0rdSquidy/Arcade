@@ -1,0 +1,166 @@
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-size: 20px;
+    background-color: black;
+    font-family:sans-serif;
+}
+
+h1{
+    font-size: 250%;
+    margin-bottom:20px;
+    border-radius: 5px solid rgb(0, 8, 255);
+}
+.luigiButton img{
+    width: 10%;
+    display: flex;
+    margin: 0%;
+    margin-right: auto;
+    transform: translate(280%, 0);
+    z-index: 100;
+}
+.Homebutton img{
+    width: 10%;
+    display: flex;
+    margin: 0%;
+    margin-right: auto;
+    transform: translate(-1400%, 0);
+    z-index: 100;
+
+}
+h3 img{
+    width: 15%;
+    display: flex;
+    margin: 0%;
+    margin-left: auto;
+    z-index: 100;
+}
+
+article{
+    width:60vw;
+    background: white;
+    margin-top:px;
+    margin-left:300px;
+    padding:40px;
+
+}
+
+.front img{
+    width: 60.5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+img{
+    width: 50%;
+    border-radius:5px;
+}
+
+p{
+    margin-bottom: 40px;
+}
+
+img:hover{
+    scale: 1.05;
+}
+
+img{
+    border-radius: 5px;
+    transition: 2s;
+}
+
+audio{
+    margin-top: 2%;
+}
+
+video{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 7%;
+}
+header{
+background-color: black;
+color: azure;
+height: 60px;
+width: 100%;
+position: fixed;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 101;
+}
+
+footer{
+    background: gray;
+    color: azure;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+
+}
+
+
+
+@media (max-width = 1000) {
+    article{
+        width: 90dvh;
+    }
+}
+.top{
+    width: 80px;
+    height: 80px;
+    border: none;
+    background: gray;
+    font-size: 150%;
+    border-radius: 5px;
+    color: azure;
+    position: fixed;
+    bottom: 10%;
+    right: 10%;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Home img{
+    width: 100%;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.buttom img{
+    width: 120%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translate(-10%, 92%);
+}
+
+
+
+canvas {
+    display: block;
+    margin: auto;
+    position :absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    transform: translate(0, 70.7%);
+  }
+
