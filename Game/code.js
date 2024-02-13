@@ -4,29 +4,29 @@
  */
 // Inspired by base2 and Prototype
 (function(){
-    var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
+    let initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
    
     // The base Class implementation (does nothing)
     this.Class = function(){};
    
     // Create a new Class that inherits from this class
     Class.extend = function(prop) {
-      var _super = this.prototype;
+      let _super = this.prototype;
      
       // Instantiate a base class (but only create the instance,
       // don't run the init constructor)
       initializing = true;
-      var prototype = new this();
+      let prototype = new this();
       initializing = false;
      
       // Copy the properties over onto the new prototype
-      for (var name in prop) {
+      for (let name in prop) {
         // Check if we're overwriting an existing function
         prototype[name] = typeof prop[name] == "function" &&
           typeof _super[name] == "function" && fnTest.test(prop[name]) ?
           (function(name, fn){
             return function() {
-              var tmp = this._super;
+              let tmp = this._super;
              
               // Add a new ._super() method that is the same method
               // but on the super-class
@@ -34,7 +34,7 @@
              
               // The method only need to be bound temporarily, so we
               // remove it when we're done executing
-              var ret = fn.apply(this, arguments);        
+              let ret = fn.apply(this, arguments);        
               this._super = tmp;
              
               return ret;
@@ -69,7 +69,7 @@
   //
   // ###################################################################
   (function() {
-    var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    let requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     window.requestAnimationFrame = requestAnimationFrame;
   })();
   
@@ -84,20 +84,20 @@
   // Constants
   //
   // ###################################################################
-  var IS_CHROME = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-  var CANVAS_WIDTH = 640;
-  var CANVAS_HEIGHT = 640;
-  var SPRITE_SHEET_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAEACAYAAAADRnAGAAACGUlEQVR42u3aSQ7CMBAEQIsn8P+/hiviAAK8zFIt5QbELiTHmfEYE3L9mZE9AAAAqAVwBQ8AAAD6THY5CgAAAKbfbPX3AQAAYBEEAADAuZrC6UUyfMEEAIBiAN8OePXnAQAAsLcmmKFPAQAAgHMbm+gbr3Sdo/LtcAAAANR6GywPAgBAM4D2JXAAABoBzBjA7AmlOx8AAEAzAOcDAADovTc4vQim6wUCABAYQG8QAADd4dPd2fRVYQAAANQG0B4HAABAawDnAwAA6AXgfAAAALpA2uMAAABwPgAAgPoAM9Ci/R4AAAD2dmqcEQIAIC/AiQGuAAYAAECcRS/a/cJXkUf2AAAAoBaA3iAAALrD+gIAAADY9baX/nwAAADNADwFAADo9YK0e5FMX/UFACA5QPSNEAAAAHKtCekmDAAAAADvBljtfgAAAGgMMGOrunvCy2uCAAAACFU6BwAAwF6AGQPa/XsAAADYB+B8AAAAtU+ItD4OAwAAAFVhAACaA0T7B44/BQAAANALwGMQAAAAADYO8If2+P31AgAAQN0SWbhFDwCAZlXgaO1xAAAA1FngnA8AACAeQPSNEAAAAM4CnC64AAAA4GzN4N9NSfgKEAAAAACszO26X8/X6BYAAAD0Anid8KcLAAAAAAAAAJBnwNEvAAAA9Jns1ygAAAAAAAAAAAAAAAAAAABAQ4COCENERERERERERBrnAa1sJuUVr3rsAAAAAElFTkSuQmCC';
-  var LEFT_KEY = 37;
-  var RIGHT_KEY = 39;
-  var SHOOT_KEY = 88;
-  var TEXT_BLINK_FREQ = 500;
-  var PLAYER_CLIP_RECT = { x: 0, y: 204, w: 62, h: 32 };
-  var ALIEN_BOTTOM_ROW = [ { x: 0, y: 0, w: 51, h: 34 }, { x: 0, y: 102, w: 51, h: 34 }];
-  var ALIEN_MIDDLE_ROW = [ { x: 0, y: 137, w: 50, h: 33 }, { x: 0, y: 170, w: 50, h: 34 }];
-  var ALIEN_TOP_ROW = [ { x: 0, y: 68, w: 50, h: 32 }, { x: 0, y: 34, w: 50, h: 32 }];
-  var ALIEN_X_MARGIN = 40;
-  var ALIEN_SQUAD_WIDTH = 11 * ALIEN_X_MARGIN;
+  let IS_CHROME = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  let CANVAS_WIDTH = 640;
+  let CANVAS_HEIGHT = 640;
+  let SPRITE_SHEET_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAEACAYAAAADRnAGAAACGUlEQVR42u3aSQ7CMBAEQIsn8P+/hiviAAK8zFIt5QbELiTHmfEYE3L9mZE9AAAAqAVwBQ8AAAD6THY5CgAAAKbfbPX3AQAAYBEEAADAuZrC6UUyfMEEAIBiAN8OePXnAQAAsLcmmKFPAQAAgHMbm+gbr3Sdo/LtcAAAANR6GywPAgBAM4D2JXAAABoBzBjA7AmlOx8AAEAzAOcDAADovTc4vQim6wUCABAYQG8QAADd4dPd2fRVYQAAANQG0B4HAABAawDnAwAA6AXgfAAAALpA2uMAAABwPgAAgPoAM9Ci/R4AAAD2dmqcEQIAIC/AiQGuAAYAAECcRS/a/cJXkUf2AAAAoBaA3iAAALrD+gIAAADY9baX/nwAAADNADwFAADo9YK0e5FMX/UFACA5QPSNEAAAAHKtCekmDAAAAADvBljtfgAAAGgMMGOrunvCy2uCAAAACFU6BwAAwF6AGQPa/XsAAADYB+B8AAAAtU+ItD4OAwAAAFVhAACaA0T7B44/BQAAANALwGMQAAAAADYO8If2+P31AgAAQN0SWbhFDwCAZlXgaO1xAAAA1FngnA8AACAeQPSNEAAAAM4CnC64AAAA4GzN4N9NSfgKEAAAAACszO26X8/X6BYAAAD0Anid8KcLAAAAAAAAAJBnwNEvAAAA9Jns1ygAAAAAAAAAAAAAAAAAAABAQ4COCENERERERERERBrnAa1sJuUVr3rsAAAAAElFTkSuQmCC';
+  let LEFT_KEY = 37;
+  let RIGHT_KEY = 39;
+  let SHOOT_KEY = 88;
+  let TEXT_BLINK_FREQ = 500;
+  let PLAYER_CLIP_RECT = { x: 0, y: 204, w: 62, h: 32 };
+  let ALIEN_BOTTOM_ROW = [ { x: 0, y: 0, w: 51, h: 34 }, { x: 0, y: 102, w: 51, h: 34 }];
+  let ALIEN_MIDDLE_ROW = [ { x: 0, y: 137, w: 50, h: 33 }, { x: 0, y: 170, w: 50, h: 34 }];
+  let ALIEN_TOP_ROW = [ { x: 0, y: 68, w: 50, h: 32 }, { x: 0, y: 34, w: 50, h: 32 }];
+  let ALIEN_X_MARGIN = 40;
+  let ALIEN_SQUAD_WIDTH = 11 * ALIEN_X_MARGIN;
   
   
   
@@ -122,15 +122,15 @@
   }
    
   function checkRectCollision(A, B) {
-    var xOverlap = valueInRange(A.x, B.x, B.x + B.w) ||
+    let xOverlap = valueInRange(A.x, B.x, B.x + B.w) ||
     valueInRange(B.x, A.x, A.x + A.w);
    
-    var yOverlap = valueInRange(A.y, B.y, B.y + B.h) ||
+    let yOverlap = valueInRange(A.y, B.y, B.y + B.h) ||
     valueInRange(B.y, A.y, A.y + A.h); 
     return xOverlap && yOverlap;
   }
   
-  var Point2D = Class.extend({
+  let Point2D = Class.extend({
     init: function(x, y) {
       this.x = (typeof x === 'undefined') ? 0 : x;
       this.y = (typeof y === 'undefined') ? 0 : y;
@@ -142,7 +142,7 @@
     }
   });
   
-  var Rect = Class.extend({
+  let Rect = Class.extend({
     init: function(x, y, w, h) {
       this.x = (typeof x === 'undefined') ? 0 : x;
       this.y = (typeof y === 'undefined') ? 0 : y;
@@ -164,22 +164,22 @@
   // Globals
   //
   // ###################################################################
-  var canvas = null;
-  var ctx = null;
-  var spriteSheetImg = null;
-  var bulletImg = null;
-  var keyStates = null;
-  var prevKeyStates = null;
-  var lastTime = 0;
-  var player = null;
-  var aliens = [];
-  var particleManager = null;
-  var updateAlienLogic = false;
-  var alienDirection = -1;
-  var alienYDown = 0;
-  var alienCount = 0;
-  var wave = 1;
-  var hasGameStarted = false;
+  let canvas = null;
+  let ctx = null;
+  let spriteSheetImg = null;
+  let bulletImg = null;
+  let keyStates = null;
+  let prevKeyStates = null;
+  let lastTime = 0;
+  let player = null;
+  let aliens = [];
+  let particleManager = null;
+  let updateAlienLogic = false;
+  let alienDirection = -1;
+  let alienYDown = 0;
+  let alienCount = 0;
+  let wave = 1;
+  let hasGameStarted = false;
   
   
   
@@ -187,7 +187,7 @@
   // Entities
   //
   // ###################################################################
-  var BaseSprite = Class.extend({
+  let BaseSprite = Class.extend({
     init: function(img, x, y) {
       this.img = img;
       this.position = new Point2D(x, y);
@@ -213,7 +213,7 @@
     }
   });
   
-  var SheetSprite = BaseSprite.extend({
+  let SheetSprite = BaseSprite.extend({
     init: function(sheetImg, clipRect, x, y) {
       this._super(sheetImg, x, y);
       this.clipRect = clipRect;
@@ -223,8 +223,8 @@
     update: function(dt) {},
     
     _updateBounds: function() {
-      var w = ~~(0.5 + this.clipRect.w * this.scale.x);
-      var h = ~~(0.5 + this.clipRect.h * this.scale.y);
+      let w = ~~(0.5 + this.clipRect.w * this.scale.x);
+      let h = ~~(0.5 + this.clipRect.h * this.scale.y);
       this.bounds.set(this.position.x - w/2, this.position.y - h/2, w, h);
     },
     
@@ -241,7 +241,7 @@
     }
   });
   
-  var Player = SheetSprite.extend({
+  let Player = SheetSprite.extend({
     init: function() {
       this._super(spriteSheetImg, PLAYER_CLIP_RECT, CANVAS_WIDTH/2, CANVAS_HEIGHT - 70);
       this.scale.set(0.85, 0.85);
@@ -259,7 +259,7 @@
     },
     
     shoot: function() {
-      var bullet = new Bullet(this.position.x, this.position.y - this.bounds.h / 2, 1, 1000);
+      let bullet = new Bullet(this.position.x, this.position.y - this.bounds.h / 2, 1, 1000);
       this.bullets.push(bullet);
     },
     
@@ -279,8 +279,8 @@
     },
     
     updateBullets: function(dt) {
-      for (var i = this.bullets.length - 1; i >= 0; i--) {
-        var bullet = this.bullets[i];
+      for (let i = this.bullets.length - 1; i >= 0; i--) {
+        let bullet = this.bullets[i];
         if (bullet.alive) {
           bullet.update(dt);
         } else {
@@ -306,8 +306,8 @@
       this._super(resized);
   
       // draw bullets
-      for (var i = 0, len = this.bullets.length; i < len; i++) {
-        var bullet = this.bullets[i];
+      for (let i = 0, len = this.bullets.length; i < len; i++) {
+        let bullet = this.bullets[i];
         if (bullet.alive) {
           bullet.draw(resized);
         }
@@ -315,7 +315,7 @@
     }
   });
   
-  var Bullet = BaseSprite.extend({
+  let Bullet = BaseSprite.extend({
     init: function(x, y, direction, speed) {
       this._super(bulletImg, x, y);
       this.direction = direction;
@@ -336,7 +336,7 @@
     }
   });
   
-  var Enemy = SheetSprite.extend({
+  let Enemy = SheetSprite.extend({
     init: function(clipRects, x, y) {
       this._super(spriteSheetImg, clipRects[0], x, y);
       this.clipRects = clipRects;
@@ -371,7 +371,7 @@
           reset();
         }
         
-        var fireTest = Math.floor(Math.random() * (this.stepDelay + 1));
+        let fireTest = Math.floor(Math.random() * (this.stepDelay + 1));
         if (getRandomArbitrary(0, 1000) <= 5 * (this.stepDelay + 1)) {
           this.doShoot = true;
         }
@@ -396,15 +396,15 @@
     }
   });
   
-  var ParticleExplosion = Class.extend({
+  let ParticleExplosion = Class.extend({
     init: function() {
       this.particlePool = [];
       this.particles = [];
     },
     
     draw: function() {
-      for (var i = this.particles.length - 1; i >= 0; i--) {
-        var particle = this.particles[i];
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        let particle = this.particles[i];
         particle.moves++;
           particle.x += particle.xunits;
             particle.y += particle.yunits + (particle.gravity * particle.moves);
@@ -426,16 +426,16 @@
     },
     
     createExplosion: function(x, y, color, number, width, height, spd, grav, lif) {
-    for (var i =0;i < number;i++) {
-              var angle = Math.floor(Math.random()*360);
-              var speed = Math.floor(Math.random()*spd/2) + spd;	
-              var life = Math.floor(Math.random()*lif)+lif/2;
-              var radians = angle * Math.PI/ 180;
-              var xunits = Math.cos(radians) * speed;
-              var yunits = Math.sin(radians) * speed;
+    for (let i =0;i < number;i++) {
+              let angle = Math.floor(Math.random()*360);
+              let speed = Math.floor(Math.random()*spd/2) + spd;	
+              let life = Math.floor(Math.random()*lif)+lif/2;
+              let radians = angle * Math.PI/ 180;
+              let xunits = Math.cos(radians) * speed;
+              let yunits = Math.sin(radians) * speed;
                   
               if (this.particlePool.length > 0) {
-                  var tempParticle = this.particlePool.pop();
+                  let tempParticle = this.particlePool.pop();
                   tempParticle.x = x;
                   tempParticle.y = y;
                   tempParticle.xunits = xunits;
@@ -483,7 +483,7 @@
   }
   
   function preDrawImages() {
-    var canvas = drawIntoCanvas(2, 8, function(ctx) {
+    let canvas = drawIntoCanvas(2, 8, function(ctx) {
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       });
@@ -510,10 +510,10 @@
   
   function setupAlienFormation() {
     alienCount = 0;
-    for (var i = 0, len = 5 * 11; i < len; i++) {
-      var gridX = (i % 11);
-      var gridY = Math.floor(i / 11);
-      var clipRects;
+    for (let i = 0, len = 5 * 11; i < len; i++) {
+      let gridX = (i % 11);
+      let gridY = Math.floor(i / 11);
+      let clipRects;
       switch (gridY) {
         case 0: 
         case 1: clipRects = ALIEN_BOTTOM_ROW; break;
@@ -565,8 +565,8 @@
       alienYDown = 25;
     }
     
-    for (var i = aliens.length - 1; i >= 0; i--) {
-      var alien = aliens[i];
+    for (let i = aliens.length - 1; i >= 0; i--) {
+      let alien = aliens[i];
       if (!alien.alive) {
         aliens.splice(i, 1);
         alien = null;
@@ -593,12 +593,12 @@
   }
   
   function resolveBulletEnemyCollisions() {
-    var bullets = player.bullets;
+    let bullets = player.bullets;
     
-    for (var i = 0, len = bullets.length; i < len; i++) {
-      var bullet = bullets[i];
-      for (var j = 0, alen = aliens.length; j < alen; j++) {
-        var alien = aliens[j];
+    for (let i = 0, len = bullets.length; i < len; i++) {
+      let bullet = bullets[i];
+      for (let j = 0, alen = aliens.length; j < alen; j++) {
+        let alien = aliens[j];
         if (checkRectCollision(bullet.bounds, alien.bounds)) {
           alien.alive = bullet.alive = false;
           particleManager.createExplosion(alien.position.x, alien.position.y, 'white', 70, 5,5,3,.15,50);
@@ -609,8 +609,8 @@
   }
   
   function resolveBulletPlayerCollisions() {
-    for (var i = 0, len = aliens.length; i < len; i++) {
-      var alien = aliens[i];
+    for (let i = 0, len = aliens.length; i < len; i++) {
+      let alien = aliens[i];
       if (alien.bullet !== null && checkRectCollision(alien.bullet.bounds, player.bounds)) {
         if (player.lives === 0) {
           hasGameStarted = false;
@@ -640,10 +640,10 @@
   }
   
   function drawIntoCanvas(width, height, drawFunc) {
-    var canvas = document.createElement('canvas');
+    let canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
-    var ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d');
     drawFunc(ctx);
     return canvas;
   }
@@ -655,7 +655,7 @@
   }
   
   function fillCenteredText(text, x, y, color, fontSize) {
-    var metrics = ctx.measureText(text);
+    let metrics = ctx.measureText(text);
     fillText(text, x - metrics.width/2, y, color, fontSize);
   }
   
@@ -678,8 +678,8 @@
   }
   
   function drawAliens(resized) {
-    for (var i = 0; i < aliens.length; i++) {
-      var alien = aliens[i];
+    for (let i = 0; i < aliens.length; i++) {
+      let alien = aliens[i];
       alien.draw(resized);
     }
   }
@@ -697,8 +697,8 @@
   }
   
   function animate() {
-    var now = window.performance.now();
-    var dt = now - lastTime;
+    let now = window.performance.now();
+    let dt = now - lastTime;
     if (dt > 100) dt = 100;
     if (wasKeyPressed(13) && !hasGameStarted) {
       initGame();
@@ -728,11 +728,11 @@
   //
   // ###################################################################
   function resize() {
-    var w = window.innerWidth;
-    var h = window.innerHeight;
+    let w = window.innerWidth;
+    let h = window.innerHeight;
   
       // calculate the scale factor to keep a correct aspect ratio
-    var scaleFactor = Math.min(w / CANVAS_WIDTH, h / CANVAS_HEIGHT);
+    let scaleFactor = Math.min(w / CANVAS_WIDTH, h / CANVAS_HEIGHT);
     
     if (IS_CHROME) {
       canvas.width = CANVAS_WIDTH * scaleFactor;
