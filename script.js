@@ -469,11 +469,12 @@
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
   }
-  
+  var ctx
   function preDrawImages() {
     var canvas = drawIntoCanvas(2, 8, function(ctx) {
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        
       });
       bulletImg = new Image();
       bulletImg.src = canvas.toDataURL();
@@ -593,7 +594,10 @@
       var alien = aliens[i];
       if (alien.bullet !== null && checkRectCollision(alien.bullet.bounds, player.bounds)) {
         if (player.lives === 0) {
-          hasGameStarted = false;
+          clearTimeout(gameoverTimeOut);
+          gameoverTimeOut = setTimeout(function(){alert("GAME OVER!!")}, 100)
+          // setTimeout(alert("GAME OVER!!"), 1000)
+          setTimeout(gameover, 2000)
         } else {
          alien.bullet.alive = false;
          particleManager.createExplosion(player.position.x, player.position.y, 'gray', 100, 8,8,6,0.001,40);
@@ -605,7 +609,11 @@
       }
     }
   }
-  
+
+  var gameoverTimeOut;
+  function gameover(){
+    hasGameStarted = false
+  }
   function resolveCollisions() {
     resolveBulletEnemyCollisions();
     resolveBulletPlayerCollisions();
@@ -626,6 +634,7 @@
     var ctx = canvas.getContext('2d');
     drawFunc(ctx);
     return canvas;
+    
   }
   
   function fillText(text, x, y, color, fontSize) {
@@ -656,7 +665,11 @@
     fillCenteredText('SCORE: ' + player.score, CANVAS_WIDTH/2, 20);
     fillBlinkingText('18000', CANVAS_WIDTH - 45, CANVAS_HEIGHT - 7.5, TEXT_BLINK_FREQ);
   }
-  
+  function THEGAMEOVER(){
+    if (lives === 0) {
+      fillCenteredText("BIDEN INVASION", CANVAS_WIDTH/2, CANVAS_HEIGHT/2.75, 'red', 36);
+    }
+  }
   function drawAliens(resized) {
     for (var i = 0; i < aliens.length; i++) {
       var alien = aliens[i];
@@ -672,7 +685,7 @@
   }
   
   function drawStartScreen() {
-    fillCenteredText("Space Invaders", CANVAS_WIDTH/2, CANVAS_HEIGHT/2.75, '#FFFFFF', 36);
+    fillCenteredText("BIDEN INVASION", CANVAS_WIDTH/2, CANVAS_HEIGHT/2.75, '#FFFFFF', 36);
     fillBlinkingText("Press enter to play!", CANVAS_WIDTH/2, CANVAS_HEIGHT/2, 500, '#FFFFFF', 36);
     fillBlinkingText("Press enter to play!", CANVAS_WIDTH/2, CANVAS_HEIGHT/2, 500, '#FFFFFF', 36);
     fillCenteredText("Press SPACE to shoot!", CANVAS_WIDTH/2, CANVAS_HEIGHT/1.55, 500, '#FFFFFF', 36);
@@ -709,7 +722,7 @@
   function resize() {
     var w = window.innerWidth;
     var h = window.innerHeight;
-  
+
 
     var scaleFactor = Math.min(w / CANVAS_WIDTH, h / CANVAS_HEIGHT);
     
