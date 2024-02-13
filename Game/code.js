@@ -550,8 +550,11 @@
     for (let i = 0, len = aliens.length; i < len; i++) {
       let alien = aliens[i];
       if (alien.bullet !== null && checkRectCollision(alien.bullet.bounds, player.bounds)) {
-        if (player.lives === 0) {
+        if (player.lives === 0) 
+        { setTimeout(5)
+          {
           hasGameStarted = false;
+          }
         } else {
          alien.bullet.alive = false;
          particleManager.createExplosion(player.position.x, player.position.y, 'red', 100, 8,8,6,0.001,40);
